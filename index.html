@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:;">
+<meta name="description" content="Interaktive Lernsimulation zur Integration agentischer KI-Systeme im Mittelstand. Strategische Entscheidungen treffen und KI-Transformation erleben – für BWL-Studierende.">
+<meta property="og:title" content="KI-Integration im Mittelstand – Lernsimulation">
+<meta property="og:description" content="Treffen Sie strategische Entscheidungen zur KI-Integration in einem mittelständischen Unternehmen. Interaktive Simulation für BWL-Studierende.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 <title>KI-Integration im Mittelstand – Lernsimulation</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -254,7 +261,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     <div class="header-right">
       <div class="mode-toggle" title="Modus umschalten">
         <span class="hide-mobile">Preview</span>
-        <div class="toggle-track" id="modeToggle" onclick="toggleMode()">
+        <div class="toggle-track" id="modeToggle" onclick="toggleMode()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMode();}" tabindex="0" role="switch" aria-checked="false" aria-label="Lern-Modus aktivieren">
           <div class="toggle-thumb"></div>
         </div>
         <span class="hide-mobile">Lern-Modus</span>
@@ -277,11 +284,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 </div>
 
 <!-- CASE BRIEF MODAL -->
-<div class="modal-overlay" id="caseBriefModal">
+<div class="modal-overlay" id="caseBriefModal" role="dialog" aria-modal="true" aria-labelledby="caseBriefTitle">
   <div class="modal">
     <div class="modal-header">
-      <h3>Case-Brief: TechSupply GmbH</h3>
-      <button class="modal-close" onclick="closeCaseBrief()">&times;</button>
+      <h3 id="caseBriefTitle">Case-Brief: TechSupply GmbH</h3>
+      <button class="modal-close" onclick="closeCaseBrief()" aria-label="Modal schließen">&times;</button>
     </div>
     <div class="modal-body" id="caseBriefModalBody"></div>
   </div>
@@ -307,15 +314,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <!-- Tab Navigation -->
-    <nav class="case-nav" id="caseNav">
-      <button class="case-nav-btn active" onclick="showCasePanel(0)">Unternehmen</button>
-      <button class="case-nav-btn" onclick="showCasePanel(1)">Ihre Rolle</button>
-      <button class="case-nav-btn" onclick="showCasePanel(2)">Entscheidungsprozess</button>
-      <button class="case-nav-btn" onclick="showCasePanel(3)">Ihre Aufgabe</button>
+    <nav class="case-nav" id="caseNav" role="tablist" aria-label="Case-Brief Navigation">
+      <button class="case-nav-btn active" onclick="showCasePanel(0)" role="tab" aria-selected="true" aria-controls="casePanel0">Unternehmen</button>
+      <button class="case-nav-btn" onclick="showCasePanel(1)" role="tab" aria-selected="false" aria-controls="casePanel1">Ihre Rolle</button>
+      <button class="case-nav-btn" onclick="showCasePanel(2)" role="tab" aria-selected="false" aria-controls="casePanel2">Entscheidungsprozess</button>
+      <button class="case-nav-btn" onclick="showCasePanel(3)" role="tab" aria-selected="false" aria-controls="casePanel3">Ihre Aufgabe</button>
     </nav>
 
     <!-- Panel 0: Unternehmen -->
-    <div class="case-panel active" id="casePanel0">
+    <div class="case-panel active" id="casePanel0" role="tabpanel">
       <div class="info-card">
         <h3><span class="ic">&#127970;</span> Unternehmenskontext: TechSupply GmbH</h3>
         <p>Die TechSupply GmbH ist ein mittelständischer B2B-Zulieferer für Industriekomponenten mit Sitz in Süddeutschland.</p>
@@ -358,7 +365,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <!-- Panel 1: Ihre Rolle -->
-    <div class="case-panel" id="casePanel1">
+    <div class="case-panel" role="tabpanel" id="casePanel1">
       <div class="info-card">
         <h3><span class="ic">&#128100;</span> Ihre Rolle: AI Transformation Manager (m/w/d)</h3>
         <p>Sie wurden vor 3 Monaten als <strong>AI Transformation Manager</strong> eingestellt – eine neu geschaffene Position. Sie berichten direkt an die Geschäftsführung (Juniorchefin, MBA, 38 Jahre).</p>
@@ -423,7 +430,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <!-- Panel 2: Entscheidungsprozess -->
-    <div class="case-panel" id="casePanel2">
+    <div class="case-panel" role="tabpanel" id="casePanel2">
       <div class="info-card">
         <h3><span class="ic">&#9881;&#65039;</span> Wie Entscheidungen getroffen werden</h3>
         <p>In dieser Simulation treffen Sie strategische Entscheidungen, die den <strong>realen Entscheidungsprozess</strong> in einem mittelständischen Unternehmen simulieren.</p>
@@ -450,7 +457,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <!-- Panel 3: Aufgabe -->
-    <div class="case-panel" id="casePanel3">
+    <div class="case-panel" role="tabpanel" id="casePanel3">
       <div class="info-card">
         <h3><span class="ic">&#127919;</span> Ihre Aufgabe heute</h3>
         <p>Die Geschäftsführung hat Sie gebeten, eine <strong>Entscheidungsvorlage</strong> für das erste AI-Projekt zu erarbeiten.</p>
@@ -478,11 +485,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
         <h3>Bereit für den Start?</h3>
         <p>Wählen Sie Ihren Simulationsmodus:</p>
         <div class="mode-cards">
-          <div class="mode-card" id="modeCardPreview" onclick="selectStartMode(false)">
+          <div class="mode-card" id="modeCardPreview" onclick="selectStartMode(false)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectStartMode(false);}" tabindex="0" role="radio" aria-checked="false">
             <h4>&#128270; Preview-Modus</h4>
             <p>Erkunden Sie alle Runden schnell durch Klicken – ohne Analyse-Pflicht</p>
           </div>
-          <div class="mode-card" id="modeCardLearn" onclick="selectStartMode(true)">
+          <div class="mode-card" id="modeCardLearn" onclick="selectStartMode(true)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectStartMode(true);}" tabindex="0" role="radio" aria-checked="false">
             <h4>&#128218; Lern-Modus</h4>
             <p>Vollständige Simulation mit Analyse-Aufgaben (empfohlen)</p>
           </div>
@@ -504,7 +511,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 
     <!-- Accordion: Additional Context -->
     <div class="accordion" id="acc1ctx">
-      <div class="accordion-header" onclick="toggleAccordion('acc1ctx')">Zusätzliche Kontextinformationen <span class="accordion-arrow">&#9660;</span></div>
+      <div class="accordion-header" onclick="toggleAccordion('acc1ctx')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion('acc1ctx');}" tabindex="0" role="button" aria-expanded="false">Zusätzliche Kontextinformationen <span class="accordion-arrow">&#9660;</span></div>
       <div class="accordion-body">
         <p><strong>Customer Service:</strong> 8 MA bearbeiten täglich ca. 120 Anfragen per E-Mail und Ticket-System. 65% sind Standardanfragen (Lieferstatus, Preisinformationen, Produktverfügbarkeit). Die Fluktuation im Team liegt bei 25% p.a.</p>
         <p style="margin-top:.5rem;"><strong>Supply Chain:</strong> Prognosen werden manuell in Excel erstellt. Die Überbestandsquote liegt bei 18%, während 12% der Bestellungen aufgrund von Lieferengpässen verzögert werden.</p>
@@ -513,7 +520,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <div class="options-grid" id="round1Options">
-      <div class="option-card" data-round="1" data-option="A" onclick="selectOption(this)">
+      <div class="option-card" data-round="1" data-option="A" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option A</div>
         <h3>Customer Service Automation</h3>
         <p>E-Mail- und Ticket-Handling durch einen KI-Agenten automatisieren. Direkte Auswirkung auf Kundenzufriedenheit.</p>
@@ -524,7 +531,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
           <div class="metric highlight"><span class="metric-label">ROI (12 Monate)</span><span class="metric-value">+185%</span></div>
         </div>
       </div>
-      <div class="option-card" data-round="1" data-option="B" onclick="selectOption(this)">
+      <div class="option-card" data-round="1" data-option="B" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option B</div>
         <h3>Supply Chain Forecasting</h3>
         <p>KI-gestützte Bestandsplanung und Nachfrageprognose. Reduziert Überbestände und Lieferengpässe.</p>
@@ -535,7 +542,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
           <div class="metric"><span class="metric-label">ROI (12 Monate)</span><span class="metric-value">+95%</span></div>
         </div>
       </div>
-      <div class="option-card" data-round="1" data-option="C" onclick="selectOption(this)">
+      <div class="option-card" data-round="1" data-option="C" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option C</div>
         <h3>Financial Reporting Automation</h3>
         <p>Automatisierung der Monatsabschlüsse und Finanzberichterstattung. Geringeres Fehlerrisiko.</p>
@@ -552,7 +559,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     <div class="analysis-section" id="analysis1">
       <h4>&#128221; Analyse-Aufgabe (Runde 1)</h4>
       <div class="analysis-prompt">Begründen Sie Ihre Prozessauswahl: Warum ist dieser Prozess der beste Kandidat für das erste KI-Projekt? Berücksichtigen Sie ROI, strategische Passung, Stakeholder-Akzeptanz und Risiken.</div>
-      <textarea class="analysis-textarea" id="analysisText1" placeholder="Ihre Analyse hier eingeben..." oninput="updateCharCount(1)"></textarea>
+      <textarea class="analysis-textarea" id="analysisText1" aria-label="Analyse-Aufgabe Runde 1" placeholder="Ihre Analyse hier eingeben..." oninput="updateCharCount(1)"></textarea>
       <div class="analysis-footer">
         <span class="char-count" id="charCount1">0 / 150 Zeichen (Minimum)</span>
         <button class="example-toggle" onclick="toggleExample(1)">Beispielantwort anzeigen</button>
@@ -578,7 +585,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <div class="accordion" id="acc2ctx">
-      <div class="accordion-header" onclick="toggleAccordion('acc2ctx')">Zusätzliche Kontextinformationen <span class="accordion-arrow">&#9660;</span></div>
+      <div class="accordion-header" onclick="toggleAccordion('acc2ctx')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion('acc2ctx');}" tabindex="0" role="button" aria-expanded="false">Zusätzliche Kontextinformationen <span class="accordion-arrow">&#9660;</span></div>
       <div class="accordion-body">
         <p><strong>IT-Ressourcen:</strong> Das interne IT-Team (4 Personen) ist mit Wartung und Support voll ausgelastet. Für eine Eigenentwicklung müssten 2 externe Entwickler für 6–9 Monate engagiert werden.</p>
         <p style="margin-top:.5rem;"><strong>Marktangebot:</strong> Es gibt 3–4 etablierte SaaS-Anbieter für den gewählten Prozessbereich. Referenzkunden im Mittelstand vorhanden. API-Integration in bestehende Systeme grundsätzlich möglich.</p>
@@ -587,7 +594,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <div class="options-grid" id="round2Options">
-      <div class="option-card" data-round="2" data-option="A" onclick="selectOption(this)">
+      <div class="option-card" data-round="2" data-option="A" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option A</div>
         <h3>Eigenentwicklung</h3>
         <p>Internes Entwicklungsteam baut maßgeschneiderte Lösung. Volle Kontrolle über Daten und Architektur.</p>
@@ -598,7 +605,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
           <div class="metric"><span class="metric-label">Tech-Debt-Risiko</span><span class="metric-value">Mittel–Hoch</span></div>
         </div>
       </div>
-      <div class="option-card" data-round="2" data-option="B" onclick="selectOption(this)">
+      <div class="option-card" data-round="2" data-option="B" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option B</div>
         <h3>SaaS-Lösung kaufen</h3>
         <p>Etablierte Plattform eines Anbieters nutzen. Schnelle Implementierung, aber Abhängigkeit vom Vendor.</p>
@@ -609,7 +616,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
           <div class="metric"><span class="metric-label">Vendor Lock-in</span><span class="metric-value">Hoch</span></div>
         </div>
       </div>
-      <div class="option-card" data-round="2" data-option="C" onclick="selectOption(this)">
+      <div class="option-card" data-round="2" data-option="C" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option C</div>
         <h3>Hybrid-Ansatz</h3>
         <p>SaaS-Kern mit eigenen Anpassungen kombinieren. Balanciert Geschwindigkeit und Kontrolle.</p>
@@ -625,7 +632,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     <div class="analysis-section" id="analysis2">
       <h4>&#128221; Analyse-Aufgabe (Runde 2)</h4>
       <div class="analysis-prompt">Vergleichen Sie die TCO (Total Cost of Ownership) über 3 Jahre für alle drei Optionen. Welche Faktoren neben den direkten Kosten beeinflussen Ihre Entscheidung? Wie würden Sie den IT-Leiter überzeugen?</div>
-      <textarea class="analysis-textarea" id="analysisText2" placeholder="Ihre Analyse hier eingeben..." oninput="updateCharCount(2)"></textarea>
+      <textarea class="analysis-textarea" id="analysisText2" aria-label="Analyse-Aufgabe Runde 2" placeholder="Ihre Analyse hier eingeben..." oninput="updateCharCount(2)"></textarea>
       <div class="analysis-footer">
         <span class="char-count" id="charCount2">0 / 150 Zeichen (Minimum)</span>
         <button class="example-toggle" onclick="toggleExample(2)">Beispielantwort anzeigen</button>
@@ -651,7 +658,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <div class="accordion" id="acc3ctx">
-      <div class="accordion-header" onclick="toggleAccordion('acc3ctx')">Zusätzliche Kontextinformationen <span class="accordion-arrow">&#9660;</span></div>
+      <div class="accordion-header" onclick="toggleAccordion('acc3ctx')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion('acc3ctx');}" tabindex="0" role="button" aria-expanded="false">Zusätzliche Kontextinformationen <span class="accordion-arrow">&#9660;</span></div>
       <div class="accordion-body">
         <p><strong>Change-Readiness:</strong> Eine interne Umfrage ergab, dass 40% der Mitarbeiter "besorgt" über KI-Einführung sind, 35% "neutral" und 25% "positiv". Die CS-Teamleiterin hat Unterstützung signalisiert.</p>
         <p style="margin-top:.5rem;"><strong>Betriebsrat:</strong> Hat eine Betriebsvereinbarung zur "Einführung digitaler Systeme" gefordert. Verhandlungen laufen, ein Entwurf liegt vor. Kernforderung: Keine betriebsbedingten Kündigungen für 24 Monate.</p>
@@ -660,7 +667,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <div class="options-grid" id="round3Options">
-      <div class="option-card" data-round="3" data-option="A" onclick="selectOption(this)">
+      <div class="option-card" data-round="3" data-option="A" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option A</div>
         <h3>Pilotprojekt</h3>
         <p>Start mit einem Team (3 Mitarbeiter) über 3 Monate. Erkenntnisse sammeln, dann ausweiten.</p>
@@ -671,7 +678,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
           <div class="metric"><span class="metric-label">Change Mgmt.</span><span class="metric-value">Überschaubar</span></div>
         </div>
       </div>
-      <div class="option-card" data-round="3" data-option="B" onclick="selectOption(this)">
+      <div class="option-card" data-round="3" data-option="B" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option B</div>
         <h3>Schrittweise Einführung</h3>
         <p>50% der Prozesse in 6 Monaten umstellen. Parallelbetrieb von alt und neu während der Transition.</p>
@@ -682,7 +689,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
           <div class="metric"><span class="metric-label">Change Mgmt.</span><span class="metric-value">Intensiv</span></div>
         </div>
       </div>
-      <div class="option-card" data-round="3" data-option="C" onclick="selectOption(this)">
+      <div class="option-card" data-round="3" data-option="C" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option C</div>
         <h3>Big Bang</h3>
         <p>Sofortige, vollständige Umstellung aller Prozesse. Maximaler Zeitdruck, aber schnellster ROI bei Erfolg.</p>
@@ -698,7 +705,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     <div class="analysis-section" id="analysis3">
       <h4>&#128221; Analyse-Aufgabe (Runde 3)</h4>
       <div class="analysis-prompt">Erstellen Sie einen groben Change-Management-Plan für Ihre gewählte Deployment-Strategie. Wie adressieren Sie die Bedenken des Betriebsrats und der 40% besorgten Mitarbeiter?</div>
-      <textarea class="analysis-textarea" id="analysisText3" placeholder="Ihre Analyse hier eingeben..." oninput="updateCharCount(3)"></textarea>
+      <textarea class="analysis-textarea" id="analysisText3" aria-label="Analyse-Aufgabe Runde 3" placeholder="Ihre Analyse hier eingeben..." oninput="updateCharCount(3)"></textarea>
       <div class="analysis-footer">
         <span class="char-count" id="charCount3">0 / 150 Zeichen (Minimum)</span>
         <button class="example-toggle" onclick="toggleExample(3)">Beispielantwort anzeigen</button>
@@ -733,7 +740,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
 
     <div class="options-grid" id="round4Options">
-      <div class="option-card" data-round="4" data-option="A" onclick="selectOption(this)">
+      <div class="option-card" data-round="4" data-option="A" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option A</div>
         <h3>Weiter skalieren</h3>
         <p>Erfolge nutzen und KI-Agenten auf weitere Abteilungen ausweiten (Einkauf, Vertrieb, HR).</p>
@@ -744,7 +751,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
           <div class="metric highlight"><span class="metric-label">Langfrist-ROI</span><span class="metric-value">+250%</span></div>
         </div>
       </div>
-      <div class="option-card" data-round="4" data-option="B" onclick="selectOption(this)">
+      <div class="option-card" data-round="4" data-option="B" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option B</div>
         <h3>Optimieren &amp; konsolidieren</h3>
         <p>Bestehende Lösung stabilisieren, Feintuning durchführen, Prozesse verbessern.</p>
@@ -755,7 +762,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
           <div class="metric"><span class="metric-label">Langfrist-ROI</span><span class="metric-value">+120%</span></div>
         </div>
       </div>
-      <div class="option-card" data-round="4" data-option="C" onclick="selectOption(this)">
+      <div class="option-card" data-round="4" data-option="C" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this);}" tabindex="0" role="radio" aria-checked="false">
         <div class="option-label">Option C</div>
         <h3>Strategie anpassen</h3>
         <p>Probleme adressieren, teilweise zurückfahren, neue Herangehensweise entwickeln.</p>
@@ -771,7 +778,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     <div class="analysis-section" id="analysis4">
       <h4>&#128221; Analyse-Aufgabe (Runde 4)</h4>
       <div class="analysis-prompt">Reflektieren Sie Ihre bisherige Strategie anhand der KPIs. Was lief gut, was weniger? Begründen Sie Ihre nächste strategische Entscheidung und wie Sie diese gegenüber der Geschäftsführung und dem CFO argumentieren würden.</div>
-      <textarea class="analysis-textarea" id="analysisText4" placeholder="Ihre Analyse hier eingeben..." oninput="updateCharCount(4)"></textarea>
+      <textarea class="analysis-textarea" id="analysisText4" aria-label="Analyse-Aufgabe Runde 4" placeholder="Ihre Analyse hier eingeben..." oninput="updateCharCount(4)"></textarea>
       <div class="analysis-footer">
         <span class="char-count" id="charCount4">0 / 150 Zeichen (Minimum)</span>
         <button class="example-toggle" onclick="toggleExample(4)">Beispielantwort anzeigen</button>
@@ -843,6 +850,13 @@ const state = {
 };
 
 const MIN_CHARS = 150;
+
+// Security: Escape user input before inserting into HTML
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
 
 // ---- DATA TABLES ----
 const round1Data = {
@@ -945,14 +959,18 @@ function toggleMode() {
   state.learnMode = !state.learnMode;
   const track = document.getElementById('modeToggle');
   track.classList.toggle('active', state.learnMode);
+  track.setAttribute('aria-checked', state.learnMode);
   applyModeToUI();
 }
 
 function selectStartMode(learn) {
   state.learnMode = learn;
   document.getElementById('modeToggle').classList.toggle('active', learn);
+  document.getElementById('modeToggle').setAttribute('aria-checked', learn);
   document.getElementById('modeCardPreview').classList.toggle('selected-mode', !learn);
+  document.getElementById('modeCardPreview').setAttribute('aria-checked', !learn);
   document.getElementById('modeCardLearn').classList.toggle('selected-mode', learn);
+  document.getElementById('modeCardLearn').setAttribute('aria-checked', learn);
   applyModeToUI();
 }
 
@@ -978,8 +996,9 @@ function applyModeToUI() {
 function selectOption(el) {
   const round = parseInt(el.dataset.round);
   const option = el.dataset.option;
-  document.querySelectorAll('#round'+round+'Options .option-card').forEach(c=>c.classList.remove('selected'));
+  document.querySelectorAll('#round'+round+'Options .option-card').forEach(c=>{c.classList.remove('selected');c.setAttribute('aria-checked','false');});
   el.classList.add('selected');
+  el.setAttribute('aria-checked','true');
   state.choices[round] = option;
   updateConfirmBtnState(round);
 }
@@ -1025,7 +1044,10 @@ function toggleExample(round) {
 }
 
 function toggleAccordion(id) {
-  document.getElementById(id).classList.toggle('open');
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+  const header = el.querySelector('.accordion-header');
+  if (header) header.setAttribute('aria-expanded', el.classList.contains('open'));
 }
 
 function updateProgress(roundNum) {
@@ -1209,7 +1231,7 @@ function showDetailedAnalysis() {
   // Include analyses if any
   let aHtml='';
   for(let r=1;r<=4;r++){if(state.analyses[r]&&state.analyses[r].trim().length>0){
-    aHtml+=`<div class="decision-item"><div class="decision-round">Analyse Runde ${r}</div><div class="decision-impact" style="white-space:pre-wrap;">${state.analyses[r]}</div></div>`;}}
+    aHtml+=`<div class="decision-item"><div class="decision-round">Analyse Runde ${r}</div><div class="decision-impact" style="white-space:pre-wrap;">${escapeHtml(state.analyses[r])}</div></div>`;}}
   const analysisSection=aHtml?`<div class="decision-summary" style="margin-top:1rem;"><h3>Ihre Analysen</h3>${aHtml}</div>`:'';
 
   c.innerHTML=`
@@ -1254,8 +1276,16 @@ function restartSimulation() {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// Close modal on overlay click
+// Close modal on overlay click or Escape key
 document.getElementById('caseBriefModal').addEventListener('click',function(e){if(e.target===this)closeCaseBrief();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('caseBriefModal').classList.contains('open'))closeCaseBrief();});
+
+// Update aria-selected on tab navigation
+const origShowCasePanel = showCasePanel;
+showCasePanel = function(idx) {
+  origShowCasePanel(idx);
+  document.querySelectorAll('.case-nav-btn').forEach((b,i)=>{b.setAttribute('aria-selected',i===idx);});
+};
 </script>
 </body>
 </html>
